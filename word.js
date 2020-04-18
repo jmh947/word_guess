@@ -15,24 +15,20 @@ let Word = function(word) {
         this.letterObjectArray.push(letter)
         
         }
+        this.displayWord = function() {
+           for (let i = 0; i < letterObjectArray.length; i++) {
+                letterArrayDisplay.push(this.letterObjectArray[i])
+               
+           }
+           return letterArrayDisplay.join(" ");
+       }
+       this.checkGuess = function(userGuess) {
+           for (let i = 0; i < letterArrayDisplay.length; i++) {
+              this.letterArrayDisplay[i].check(userGuess)
+               
+           }
+       }
     }
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+module.exports = Word
