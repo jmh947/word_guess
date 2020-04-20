@@ -16,14 +16,14 @@ let Word = function(word) {
         
         }
         this.displayWord = function() {
-           for (let i = 0; i < letterObjectArray.length; i++) {
-                letterArrayDisplay.push(this.letterObjectArray[i])
+           for (let i = 0; i < this.letterObjectArray.length; i++) {
+                this.letterArrayDisplay.push(this.letterObjectArray[i])
                
            }
-           return letterArrayDisplay.join(" ");
+           return this.letterArrayDisplay.join(" ");
        }
        this.checkGuess = function(userGuess) {
-           for (let i = 0; i < letterArrayDisplay.length; i++) {
+           for (let i = 0; i < this.letterArrayDisplay.length; i++) {
               this.letterArrayDisplay[i].check(userGuess)
                
            }

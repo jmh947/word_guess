@@ -23,8 +23,7 @@ var wordList = [
   "memes",
   "virtual happy hour",
   "working from home",
-  "australian bushfire"
-
+  "australian bushfire",
 ];
 
 var choosenWord = " ";
@@ -42,34 +41,76 @@ function gameStart() {
   if (wordSelection > -1) {
     wordList.splice(wordSelection, 1);
   }
-  
+
   console.log("You have 15 guesses. The theme is Events of 2020. Good Luck!");
-  
-  promptUser(inquirer);
 
-  function userGuess() {
-       
-  };
+  promptUser();
+}
 
-
-
-
-  //check counter variable
-  if (choosenWord().indexOf != wordSelection) {
-    guessesLeft--;
-    console.log("Incorrect! " + guessesLeft + "guesses left");
+function promptUser() {
+  console.log(gameWord.word);
+  if (counter < 15) {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "pickLetter",
+          message: "Pick a letter",
+        },
+      ])
+      .then(function (response) {
+        checkAnswer(response);
+      });
   } else {
-    guessesLeft--;
-    console.log("Good Pick!" + guessesLeft + "guesses left");
+    console.log("Out of guesses");
+    console.log(gameWord.word);
+    choosenWord = " ";
+    wordSelection = 0;
+    gameWord = " ";
+    counter = 0;
+    gameStart();
   }
-  //as long as it is less than 15--prompt user to pick a letter
-  
-  if (userGuess === choosenWord) {
-      console.log("Correct good job!")
+}
+
+function checkAnswer(response) {
+  if (
+    response.pickLetter.length === 1 &&
+    /^[a-zA-Z]+$/.test(response.pickLetter)
+  ) {
+    var lowerCase = response.pickLetter.toLowerCase();
+    var tempWord = gameWord.displayWord();
+    gameWord.checkGuess(lowerCase);
+    if (tempWord === gameWord.displayWord()) {
+      console.log("Sorry you guessed wrong");
+      counter++;
+      console.log("You have " + (15 - counter) + " guesses left");
+      promptUser();
+    } else {
+      correctGuess();
+    }
+  } else {
+    console.log("Please enter a letter");
+    promptUser();
   }
-  //if they are out of guesses tell them you are out of guesses and give them the answer
-  if (userGuess === 0) {
-    return choosenWord;
-    console.log("You are out of guesses, Better luck next time");
-  }
-};
+} 
+
+gameStart();
+
+//check counter variable
+// if (choosenWord().indexOf != wordSelection) {
+//   guessesLeft--;
+//   console.log("Incorrect! " + guessesLeft + "guesses left");
+// } else {
+//   guessesLeft--;
+//   console.log("Good Pick!" + guessesLeft + "guesses left");
+// }
+// //as long as it is less than 15--prompt user to pick a letter
+
+// if (userGuess === choosenWord) {
+//     console.log("Correct good job!")
+// }
+// //if they are out of guesses tell them you are out of guesses and give them the answer
+// if (userGuess === 0) {
+//   return choosenWord;
+//   console.log("You are out of guesses, Better luck next time");
+// }
