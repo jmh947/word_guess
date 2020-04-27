@@ -1,30 +1,28 @@
 let Letter = require("./letter")
-let Word = function(word) {
-    this.word = word
-    this.wordLength = word.length
-    this.guessesLeft = 15
-    this.letterObjectArray = []
-    this.letterArrayDisplay = []
-    this.guessesSoFar = []
-    this.makeLetterArray = function() {
-        for (let i = 0; i < this.wordLength; i++) {
-            let letter = new Letter(this.word.charAt(i))
+let Word = function(wordArr) {
+    this.wordArr = wordArr
+    this.testWord = []
+    
+    this.makeWord = function() {
+        for (let i = 0; i < wordArr.length; i++) {
+            let letter = new Letter(wordArr[i])
                 if (letter.value===" ") {
                     letter.hidden = false
                 }
-        this.letterObjectArray.push(letter)
+        this.testWord.push(letter)
         
         }
         this.displayWord = function() {
-           for (let i = 0; i < this.letterObjectArray.length; i++) {
-                this.letterArrayDisplay.push(this.letterObjectArray[i])
+            var wordDisplay = [];
+            for (let i = 0; i < this.testWord.length; i++) {
+                wordDisplay.push(this.testWord[i].displayLet())
                
            }
-           return this.letterArrayDisplay.join(" ");
+           return wordDisplay.join(" ");
        }
        this.checkGuess = function(userGuess) {
-           for (let i = 0; i < this.letterArrayDisplay.length; i++) {
-              this.letterArrayDisplay[i].check(userGuess)
+           for (let i = 0; i < this.testWord.length; i++) {
+              this.testWord[i].updateDisplay(userGuess)
                
            }
        }

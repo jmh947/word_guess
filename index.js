@@ -30,13 +30,12 @@ var choosenWord = " ";
 var wordSelection = 0;
 var gameWord = " ";
 var counter = 0;
-var userGuess = " ";
 
 function gameStart() {
   wordSelection = Math.floor(Math.random() * wordList.length);
   choosenWord = wordList[wordSelection];
   gameWord = new word(choosenWord);
-  gameWord.makeLetterArray();
+  gameWord.makeWord();
 
   if (wordSelection > -1) {
     wordList.splice(wordSelection, 1);
@@ -48,7 +47,8 @@ function gameStart() {
 }
 
 function promptUser() {
-  console.log(gameWord.word);
+  console.log(gameWord.displayWord())
+  //console.log(gameWord.wordArr);
   if (counter < 15) {
     inquirer
       .prompt([
@@ -63,10 +63,10 @@ function promptUser() {
       });
   } else {
     console.log("Out of guesses");
-    console.log(gameWord.word);
-    choosenWord = " ";
+    console.log(choosenWord.wordArr);
+    choosenWord = "";
     wordSelection = 0;
-    gameWord = " ";
+    gameWord = "";
     counter = 0;
     gameStart();
   }
@@ -93,6 +93,24 @@ function checkAnswer(response) {
     promptUser();
   }
 } 
+
+function correctGuess() {
+  console.log("You guessed correct!")
+
+  if (choosenWord.replace(/ /g,"") == (gameWord.displayWord()).replace(/ /g,"")) {
+    console.log(gameWord.displayWord())
+    console.log("You WIN!")
+     choosenWord = " ";
+     wordSelection = 0;
+     gameWord = " ";
+     counter = 0;
+
+     gameStart();
+  } else {
+    promptUser();
+  }
+}
+
 
 gameStart();
 
